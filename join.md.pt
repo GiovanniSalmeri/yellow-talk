@@ -1,0 +1,81 @@
+---
+Título: Junte-se!
+Descrição: Como se inscrever e cancelar a inscrição no fórum, regras de conduta, orientações técnicas
+---
+
+## Formulários
+
+<div class="talk-columns" markdown="1">
+<div class="talk-column" markdown="1">
+[talk signup]
+</div>
+<div class="talk-column" markdown="1">
+[talk signoff]
+</div>
+</div>
+
+## Como usar o fórum
+
++ Para cada pergunta, escreva um título curto e específico que deixe bem claro do que exatamente você está falando.
++ Antes de pedir informações básicas, por favor, dê uma olhada nos manuais, sites e recursos parecidos. Por outro lado, perguntas que geram discussão são sempre bem-vindas.
++ Mesmo que a postagem com a qual você inicia uma discussão seja chamada de “pergunta”, você pode postar um comentário sobre um assunto relevante. Nesse caso, fica implícito: “O que você acha?”.
++ Antes de postar uma resposta, leia toda a discussão e evite respostas de apenas uma linha.
++ Se quiser abordar um assunto diferente, comece com uma nova pergunta.
++ Os outros participantes querem trocar ideias com você: por isso, não use ferramentas de inteligência artificial nas suas postagens.
++ Evite postar informações pessoais sobre você ou outras pessoas.
++ Escreva de forma respeitosa com todos e ignore postagens que não sejam assim.
++ Antes de postar, verifique se sua mensagem está clara e sem erros. Depois de clicar no botão “Publicar”, você não poderá mais editá-la.
++ Não espere que os participantes leiam e respondam imediatamente: discussões por escrito estimulam mais reflexão.
+
+## Como usar feeds RSS
+
+Para ficar por dentro das novas mensagens, você pode usar um leitor de RSS. Aqui estão alguns para você escolher:
+
++ Android: [FeedFlow](https://play.google.com/store/search?q=FeedFlow&c=apps) ([F-Droid](https://f-droid.org/packages/com.prof18.feedflow/)), [Feeder](https://play.google.com/store/search?q=Feeder&c=apps) ([F-Droid](https://f-droid.org/en/packages/com.nononsenseapps.feeder/)), [RSS Reader](https://f-droid.org/en/packages/de.lolo.rssreader/), [Aggregator News](https://play.google.com/store/search?q=Aggregator%20News&c=apps)
++ Linux: [Liferea](https://github.com/lwindolf/liferea), [GFeeds](https://gfeeds.gabmus.org/), [Akregator](https://apps.kde.org/akregator/)
++ iOS: [NetNewsWire](https://apps.apple.com/it/app/netnewswire-rss-reader/id1480640210)
++ MacOS: [NetNewsWire](https://netnewswire.com/)
++ Windows: [FeedFlow](https://apps.microsoft.com/detail/9n5t1rfbb6v5), [Fluent Reader](https://apps.microsoft.com/detail/9p71fc94lrh8)
+
+Instale um deles e adicione o feed que você quiser. O Yellow Talk oferece um feed geral, que traz atualizações de todos os grupos, e um feed específico para cada grupo. Você pode usar o recurso de detecção automática dos agregadores.
+
+## Como usar Markdown
+
+Você pode usar um pouco de Markdown nas suas mensagens.
+
+Para formatar o texto:
+
+```
+Normal *itálico* **negrito**
+```
+
+Para criar parágrafos:
+
+```
+Este é o primeiro parágrafo. O próximo parágrafo deve ser separado por uma linha em branco.
+
+Este é o segundo parágrafo.
+```
+
+Para criar citações em bloco:
+
+```
+> Esta é uma citação.
+```
+
+Para criar listas:
+
+```
++ Primeiro item
++ Segundo item
++ Terceiro item
+```
+
+Para criar links:
+
+```
+Link para um [site](https://example.org)
+Link para uma [imagem](https://example.org/imagem.jpg)
+```
+
+Se uma imagem não estiver disponível online, você pode primeiro enviá-la para um serviço de compartilhamento de arquivos, como o [ImgBB](https://imgbb.com/).

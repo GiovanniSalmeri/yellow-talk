@@ -63,24 +63,20 @@ File `media/talk/groups.psv`:
     arts.cinema|All about films, actors and directors|u2
     arts.music|music of all genres, from ancient times to the present day|u32
     literature|Opinions about novels, short stories, poetry|u5
-    science.astronomy.*|General questions about stars, planets, and galaxies|u4
-    science.astronomy.far-away-galaxy|Discussions on astronomy in novels and films|u4
-    science.astronomy.moon|Talking about Moon, in science and also in poetry and songs|u51
-    science.astronomy.sun|Talking about Sun and its importance for human life|u4
-    science.chemistry|Chemical elements, transformations and industrial uses|u12
-    science.physics.*|Physics, from Aristotle to Einstein|u1
-    science.physics.mechanics|Discussions and problems about classical mechanics|u9
-    science.physics.optics|Discussions about light, lenses, reflection, refraction|u85
+    science.astronomy.*|General questions about stars and planets|u4
+    science.astronomy.far-away-galaxy|Astronomy in novels and films|u4
+    science.astronomy.moon|Talking about Moon|u51
+    science.astronomy.sun|The Sun and its importance for human life|u4
 
-Configuring a blacklist (visitors from these domains and IPs cannot subscribe):
+Configuring a blacklist (visitors with these email domains and IPs cannot subscribe):
 
     TalkBlacklist: nasty.com,verynasty.com,123.45.*.*
 
-Configuring a whitelist (only visitors from these domains or IPs can subscribe):
+Configuring a whitelist (only visitors with these email domains or IPs can subscribe):
 
     TalkWhitelist: good.com,521.70.20.*,120.*.*.*
 
-Configuring a list of blacklisted domains:
+Configuring a list of blacklisted email domains:
 
     TalkBlacklistPath: https://tempmailchecker.com/disposable-email-domains.txt
 
@@ -113,14 +109,14 @@ The following settings can be configured in file `system/extensions/yellow-syste
 `TalkWhitelist` = email domains or IPs of visitors who can subscribe, comma-separated    
 `TalkBlacklist` = email domains or IPs of visitors who cannot subscribe, comma-separated  
 `TalkBlacklistPath` = path of a list of email domains which cannot be used for subscribing  
-`TalkListStyle` = style of the groups list, `flat`, `nested`, `expandable` (the latter requires the [Filelist](https://github.com/giovannisalmeri/yellow-filelist/) extension)  
+`TalkListStyle` = style of the groups list, `flat`, `nested`, or `expandable` (the latter requires the [Filelist](https://github.com/giovannisalmeri/yellow-filelist/) extension)  
 `TalkShowAvatar` = show avatars of users, via [Libravatar](https://libravatar.org/) or [Gravatar](https://gravatar.com/)  
 `TalkTokenLifetime` = lifetime of forms, in minutes  
 `TalkPendingLifetime` = maximum time between signing up and signing in for the first time  
 `TalkClientSideValidation` = validate form fields in browser, 1 or 0  
 `TalkLatestQuestionsNumber` = number of questions to show in main page  
 `TalkTextMaxLength` = maximum length of text for a post  
-`TalkFeedName` = file name for RSS feed  
+`TalkFeedName` = filename for RSS feed  
 `TalkFeedDays` = days of posts to show in RSS feed  
 
 The following file can be customised:
@@ -129,6 +125,6 @@ The following file can be customised:
 
 ## Acknowledgements
 
-This extension borrows ideas from USENET by Tom Truscott and Jim Ellis, [LUSENET](http://www.greenspun.com/bboard/) by Philip Greenspun, [Joel on Software](https://www.joelonsoftware.com/2003/03/03/building-communities-with-software/) by Joel Spolsky, and [NoNonsenseForum](https://camendesign.com/code/nononsense_forum) by Kroc Camen. Thank you for the inspiration. The code for RSS feeds is based on the extension [Feed 0.9](https://github.com/annaesvensson/yellow-feed) by Anna Svensson. Thank you for the good work. A preliminary unpublished version of this extension was developed in collaboration with Emanuela Tangari. Thank you for your invaluable help.
+This extension borrows ideas from USENET by Tom Truscott and Jim Ellis, [LUSENET](http://www.greenspun.com/bboard/) by Philip Greenspun, [Joel on Software](https://www.joelonsoftware.com/2003/03/03/building-communities-with-software/) by Joel Spolsky, and [NoNonsenseForum](https://camendesign.com/code/nononsense_forum) by Kroc Camen. Thank you for the inspiration. The code for RSS feeds is based on the extension [Feed 0.9](https://github.com/annaesvensson/yellow-feed) by Anna Svensson. Thank you for the good work. A preliminary unpublished version of this extension was developed in collaboration with Emanuela Tangari. Thank you for the invaluable help.
 
 Do you have questions? [Get help](https://datenstrom.se/yellow/help/).

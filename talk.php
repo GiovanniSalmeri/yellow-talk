@@ -889,7 +889,7 @@ class YellowTalk {
                         $output .= "<ul>";
                         foreach ($groups[1] as $group=>$groupAttributes) {
                             $groupCount = $this->count($talk, $group);
-                            $output .= "<li><a href=\"".$this->yellow->page->getLocation(true).$this->yellow->lookup->normaliseArguments("group:$group")."messages:$groupCount/"."\">".htmlspecialchars($group)."</a> ".$value[0]."</li>";
+                            $output .= "<li><a href=\"".$this->yellow->page->getLocation(true).$this->yellow->lookup->normaliseArguments("group:$group")."messages:$groupCount/"."\">".htmlspecialchars($group)."</a> ".$groupAttributes[0]."</li>";
                         }
                         $output .= "</ul>";
                     } else {

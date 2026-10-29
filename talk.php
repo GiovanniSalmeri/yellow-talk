@@ -554,7 +554,7 @@ class YellowTalk {
             $mailMessage = str_replace("\\n", "\r\n", $mailMessage);
             $mailMessage = str_replace (["@username", "@password", "@name", "@url", "@expiry"], [ $username, $password, $name, $url, $expiry ], $mailMessage);
             if (!$this->yellow->toolbox->mail("signup", $mailHeaders, $mailMessage)) {
-                $page->error(500, $this->yellow->language->getText("contactStatusError"));
+                $this->yellow->page->error(500, $this->yellow->language->getText("contactStatusError"));
             }
         }
         fclose($fileHandle);
@@ -1000,7 +1000,7 @@ class YellowTalk {
         if ($token===null) {
             return basename(tempnam($tokenDirectory, ""));
         } else {
-            if (preg_match("/[^0-9A-Za-z]/", $token)) { $page->error(500, "Bad token!"); return; } // aggiunto ora
+            if (preg_match("/[^0-9A-Za-z]/", $token)) { $this->yellow->page->error(500, "Bad token!"); return; }
             foreach (scandir($tokenDirectory, SCANDIR_SORT_NONE) as $file) {
                 $path = $tokenDirectory.$file;
                 if (is_file($path) && time()>filemtime($path)+$tokenLifetime) @unlink($path);

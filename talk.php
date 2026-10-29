@@ -867,7 +867,7 @@ class YellowTalk {
                     $topicCount = count($talk[$authorMessage[0]]["messages"]);
                     $moderatorKey = $groups[1][$talk[$authorMessage[0]]["group"]][1];
                     $output .= "<article class=\"talk-message".($moderatorKey==$authorKey ? " talk-moderator" : "")."\" id=\"".$messageKey."\">\n";
-                    $output .= "<div><a class=\"talk-title\" href=\"".$page->getLocation(true)."topic:{$authorMessage[0]}/"."messages:$topicCount/"."#".$authorMessage[1]."\">".$talk[$authorMessage[0]]["subject"]." [".$authorMessage[1]."]</a></div>\n";
+                    $output .= "<div><a class=\"talk-title\" href=\"".$page->getLocation(true)."topic:{$authorMessage[0]}/"."messages:$topicCount/"."#".$authorMessage[1]."\">".$this->toHtml($talk[$authorMessage[0]]["subject"])." [".$authorMessage[1]."]</a></div>\n";
                     $output .= $this->getTopicStats($talk[$authorMessage[0]], $dateFormat);
 
                     $output .= "<div class=\"talk-text\">".$this->toHtml($authorMessage[2], true)."</div>\n";
@@ -1000,6 +1000,7 @@ class YellowTalk {
         if ($token===null) {
             return basename(tempnam($tokenDirectory, ""));
         } else {
+            if (preg_match("/[^0-9A-Za-z]/", $token)) { $page->error(500, "Bad token!"); return; } // aggiunto ora
             foreach (scandir($tokenDirectory, SCANDIR_SORT_NONE) as $file) {
                 $path = $tokenDirectory.$file;
                 if (is_file($path) && time()>filemtime($path)+$tokenLifetime) @unlink($path);

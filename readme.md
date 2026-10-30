@@ -22,7 +22,7 @@ Before using the forum, you have to define some groups in the file `system/exten
 
 The name of the group can contain dots to create a hierarchy (e.g. `science.astronomy.moon`). The description will be used in the page and in the feed of the group. The moderator (specified with the username) will be able to edit the posts.
 
-You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG, or GIF) in folder `media/talk/images/`, no larger than 144×400, with the same name as the group (e.g. `science.astronomy.moon.jpg`).
+You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG, or GIF) in folder `media/images/talk/`, no larger than 144×400, with the same name as the group (e.g. `science.astronomy.moon.jpg`).
 
 ## How to add users
 

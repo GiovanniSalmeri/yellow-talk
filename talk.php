@@ -1000,7 +1000,7 @@ class YellowTalk {
         if ($token===null) {
             return basename(tempnam($tokenDirectory, ""));
         } else {
-            if (preg_match("/[^0-9A-Za-z]/", $token)) { $this->yellow->page->error(500, "Bad token!"); return; }
+            if (preg_match("/[^0-9A-Za-z.]/", $token)) { $this->yellow->page->error(500, "Bad token!"); return; }
             foreach (scandir($tokenDirectory, SCANDIR_SORT_NONE) as $file) {
                 $path = $tokenDirectory.$file;
                 if (is_file($path) && time()>filemtime($path)+$tokenLifetime) @unlink($path);

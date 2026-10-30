@@ -8,26 +8,25 @@ class YellowTalk {
     // Handle initialisation
     public function onLoad($yellow) {
         $this->yellow = $yellow;
-        $this->yellow->system->setDefault("talkLocation", "/media/talk/");
-        $this->yellow->system->setDefault("talkTokenLocation", "/media/talk/token/");
-        $this->yellow->system->setDefault("talkPendingLocation", "/media/talk/pending/");
-        $this->yellow->system->setDefault("talkFeedImageLocation", "/media/talk/images/");
-        $this->yellow->system->setDefault("talkFile", "messages.json");
-        $this->yellow->system->setDefault("talkGroupFile", "groups.psv");
-        $this->yellow->system->setDefault("talkAuthorFile", "authors.psv");
-        $this->yellow->system->setDefault("talkForbiddenFile", "forbidden.psv");
+        $this->yellow->system->setDefault("talkFile", "talk-messages.json");
+        $this->yellow->system->setDefault("talkGroupFile", "talk-groups.psv");
+        $this->yellow->system->setDefault("talkAuthorFile", "talk-authors.psv");
+        $this->yellow->system->setDefault("talkForbiddenFile", "talk-forbidden.psv");
+        $this->yellow->system->setDefault("talkTokenDirectory", "talk-token/");
+        $this->yellow->system->setDefault("talkPendingDirectory", "talk-pending/");
+        $this->yellow->system->setDefault("talkFeedImageLocation", "/media/images/talk/");
         $this->yellow->system->setDefault("talkNewUsernamePrefix", "u");
         $this->yellow->system->setDefault("talkPasswordLength", "12");
         $this->yellow->system->setDefault("talkWhitelist", "");
         $this->yellow->system->setDefault("talkBlacklist", "");
         $this->yellow->system->setDefault("talkBlacklistPath", "");
-        $this->yellow->system->setDefault("talkListStyle", "nested"); // flat, expandable
+        $this->yellow->system->setDefault("talkListStyle", "nested");
+        $this->yellow->system->setDefault("talkLatestQuestionsNumber", "10");
         $this->yellow->system->setDefault("talkShowAvatar", "1");
+        $this->yellow->system->setDefault("talkClientSideValidation", "0");
+        $this->yellow->system->setDefault("talkTextMaxLength", "5000");
         $this->yellow->system->setDefault("talkTokenLifetime", "120");
         $this->yellow->system->setDefault("talkPendingLifetime", "60");
-        $this->yellow->system->setDefault("talkClientSideValidation", "0");
-        $this->yellow->system->setDefault("talkLatestQuestionsNumber", "10");
-        $this->yellow->system->setDefault("talkTextMaxLength", "5000");
         $this->yellow->system->setDefault("talkFeedName", "talk.xml");
         $this->yellow->system->setDefault("talkFeedDays", "10");
         $this->yellow->language->setDefaults(array(
@@ -283,17 +282,18 @@ class YellowTalk {
                 if (!$page->isRequest("user") || !$page->isRequest("hash")) { $page->error(401); return; }
                 $user = $page->getRequest("user");
                 $hash = $page->getRequest("hash");
-                $restrictFileName = $this->yellow->system->get("coreExtensionDirectory").$this->yellow->system->get("restrictUserFile");
+                $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+                $restrictFileName = $extensionDirectory.$this->yellow->system->get("restrictUserFile");
                 $restrictData = $this->decodeData(":", @file_get_contents($restrictFileName));
                 if (!isset($restrictData[$user]) || hash("sha256", $restrictData[$user][0])!==$hash) { $page->error(401); return; }
 
                 $feedSeconds = $this->yellow->system->get("talkFeedDays")*86400;
                 $group = $page->getRequest("group");
                 $imageUrl = $this->getGroupImageUrl($group);
-                $talkDirectory = $this->yellow->lookup->findMediaDirectory("talkLocation");
-                $authorsFileName = $talkDirectory.$this->yellow->system->get("talkAuthorFile");
+                $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+                $authorsFileName = $extensionDirectory.$this->yellow->system->get("talkAuthorFile");
                 $authors = $this->decodeData("|", @file_get_contents($authorsFileName));
-                $talkFile = $talkDirectory.$this->yellow->system->get("talkFile");
+                $talkFile = $extensionDirectory.$this->yellow->system->get("talkFile");
                 $talk = json_decode(@file_get_contents($talkFile), true) ?? [];
                 $lastModified = 0;
                 $this->yellow->page->setHeader("Content-Type", "application/rss+xml; charset=utf-8");
@@ -455,7 +455,6 @@ class YellowTalk {
                         $output = "<div class=\"talk-notice\" role=\"status\">".$this->yellow->language->getTextHtml("talkSubscriptionMessage")."</div>\n";
                     }
                 } else {
-                    //$output .= "<form aria-details=\"talk-signup-info\" ".$this->validation()."method=\"post\" class=\"talk-form talk-signup\">\n";
                     $output .= "<form aria-details=\"talk-signup-info\" ".$this->validation()."method=\"post\" class=\"talk-form talk-signup\" data-token-lifetime=\"".$tokenLifetime."\">\n";
                     $output .= "<fieldset>\n";
                     $output .= "<legend>".$this->yellow->language->getTextHtml("talkSignupLegend")."</legend>\n";
@@ -501,9 +500,9 @@ class YellowTalk {
 
     // Subscribe new users
     public function signUp($email, $name, $url) {
-        $talkDirectory = $this->yellow->lookup->findMediaDirectory("talkLocation");
-        $authorsFileName = $talkDirectory.$this->yellow->system->get("talkAuthorFile");
-        $restrictFileName = $this->yellow->system->get("coreExtensionDirectory").$this->yellow->system->get("restrictUserFile");
+        $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+        $authorsFileName = $extensionDirectory.$this->yellow->system->get("talkAuthorFile");
+        $restrictFileName = $extensionDirectory.$this->yellow->system->get("restrictUserFile");
         $fileHandle = fopen($authorsFileName, "c+");
         if (flock($fileHandle, LOCK_EX)) {
             $authorFileContent = stream_get_contents($fileHandle);
@@ -528,7 +527,7 @@ class YellowTalk {
                     $password = $this->randomString($passwordLength);
                     fseek($fileHandle, 0, SEEK_END);
                     fwrite($fileHandle, "{$username}|{$name}|{$email}\n");
-                    $pendingDirectory = $this->yellow->lookup->findMediaDirectory("talkPendingLocation");
+                    $pendingDirectory = $extensionDirectory.$this->yellow->system->get("talkPendingDirectory");
                     if (!is_dir($pendingDirectory)) mkdir($pendingDirectory, 0777);
                     file_put_contents("{$pendingDirectory}{$username}", "");
                     fflush($fileHandle);
@@ -562,9 +561,9 @@ class YellowTalk {
 
     // Unsubscribe existing users
     public function signOff($username, $password, $force = false) {
-        $talkDirectory = $this->yellow->lookup->findMediaDirectory("talkLocation");
-        $authorsFileName = $talkDirectory.$this->yellow->system->get("talkAuthorFile");
-        $restrictFileName = $this->yellow->system->get("coreExtensionDirectory").$this->yellow->system->get("restrictUserFile");
+        $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+        $authorsFileName = $extensionDirectory.$this->yellow->system->get("talkAuthorFile");
+        $restrictFileName = $extensionDirectory.$this->yellow->system->get("restrictUserFile");
         $authorsFileHandle = fopen($authorsFileName, "c+");
         $restrictFileHandle = fopen($restrictFileName, "c+");
         if (flock($authorsFileHandle, LOCK_EX) && flock($restrictFileHandle, LOCK_EX) ) {
@@ -599,7 +598,8 @@ class YellowTalk {
 
     // Check unconfirmed subscriptions
     public function checkConfirmed($username = "") {
-        $pendingDirectory = $this->yellow->lookup->findMediaDirectory("talkPendingLocation");
+        $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+        $pendingDirectory = $extensionDirectory.$this->yellow->system->get("talkPendingDirectory");
         $pendingLifetime = $this->yellow->system->get("talkPendingLifetime")*60;
         $result = true;
         foreach (scandir($pendingDirectory, SCANDIR_SORT_NONE) as $entry) {
@@ -698,18 +698,18 @@ class YellowTalk {
         if ($name=="talk") {
             if (!$this->yellow->extension->isExisting("restrict")) { $page->error(500, "Talk requires 'restrict' extension!"); return; }
             $textMaxLength = $this->yellow->system->getHtml("talkTextMaxLength");
-            $talkDirectory = $this->yellow->lookup->findMediaDirectory("talkLocation");
-            $groupFile = $talkDirectory.$this->yellow->system->get("talkGroupFile");
+            $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+            $groupFile = $extensionDirectory.$this->yellow->system->get("talkGroupFile");
             $groups = $this->scanGroups($groupFile);
             if (!$groups[1]) { $page->error(500, "Empty '$groupFile' file!"); return; }
             $listStyle = $this->yellow->system->get("talkListStyle");
-            $authorsFileName = $talkDirectory.$this->yellow->system->get("talkAuthorFile");
+            $authorsFileName = $extensionDirectory.$this->yellow->system->get("talkAuthorFile");
             $authors = $this->decodeData("|", @file_get_contents($authorsFileName));
             $userKey = $this->yellow->toolbox->getServer("PHP_AUTH_USER");
             if (!$this->checkConfirmed($userKey)) { $page->error(403, $this->yellow->language->getTextHtml("talkNotAllowed")); return; }
-            $forbiddenFile = $talkDirectory.$this->yellow->system->get("talkForbiddenFile");
+            $forbiddenFile = $extensionDirectory.$this->yellow->system->get("talkForbiddenFile");
             $forbidden = $this->decodeData("|", @file_get_contents($forbiddenFile));
-            $talkFile = $talkDirectory.$this->yellow->system->get("talkFile");
+            $talkFile = $extensionDirectory.$this->yellow->system->get("talkFile");
             $dateFormat = $this->yellow->language->getText("coreDateFormatLong");
             $isUniqueToken = $page->isRequest("unique-token") && $this->uniqueToken($page->getRequest("unique-token"));
             $tokenLifetime = $this->yellow->system->get("talkTokenLifetime")*60;
@@ -994,7 +994,8 @@ class YellowTalk {
 
     // Return or check a unique token to avoid double submissions
     private function uniqueToken($token = null) {
-        $tokenDirectory = $this->yellow->lookup->findMediaDirectory("talkTokenLocation");
+        $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+        $tokenDirectory = $extensionDirectory.$this->yellow->system->get("talkTokenDirectory");
         if (!is_dir($tokenDirectory)) mkdir($tokenDirectory, 0777);
         $tokenLifetime = $this->yellow->system->get("talkTokenLifetime")*60;
         if ($token===null) {
@@ -1026,7 +1027,8 @@ class YellowTalk {
 
     // Return feed location
     public function getFeedLocation($page) {
-        $restrictFileName = $this->yellow->system->get("coreExtensionDirectory").$this->yellow->system->get("restrictUserFile");
+        $extensionDirectory = $this->yellow->system->get("coreExtensionDirectory");
+        $restrictFileName = $extensionDirectory.$this->yellow->system->get("restrictUserFile");
         $restrictData = $this->decodeData(":", @file_get_contents($restrictFileName));
         $userKey = $this->yellow->toolbox->getServer("PHP_AUTH_USER");
         $hash = hash("sha256", $restrictData[$userKey][0]);

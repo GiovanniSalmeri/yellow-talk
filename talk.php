@@ -573,17 +573,19 @@ class YellowTalk {
             $restrictData = $this->decodeData(":", $restrictFileContent);
             if (isset($authors[$username]) && isset($restrictData[$username]) && ($restrictData[$username][0]===$password || $force)) {
                 $authors[$username] = [ "", "" ];
-                ftruncate($authorsFileHandle, 0);
                 rewind($authorsFileHandle);
                 foreach ($authors as $key=>$author) {
                     fwrite($authorsFileHandle, "{$key}|{$author[0]}|{$author[1]}\n");
                 }
+                ftruncate($authorsFileHandle, ftell($authorsFileHandle));
+                fflush($authorsFileHandle);
                 unset($restrictData[$username]);
-                ftruncate($restrictFileHandle, 0);
                 rewind($restrictFileHandle);
                 foreach ($restrictData as $key=>$restrict) {
                     fwrite($restrictFileHandle, "{$key}:{$restrict[0]}".(isset($restrict[1]) ? "|$restrict[1]" : "")."\n");
                 }
+                ftruncate($restrictFileHandle, ftell($restrictFileHandle));
+                fflush($restrictFileHandle);
                 $deleteSuccess = true;
             } else {
                 $deleteSuccess = false;
@@ -762,10 +764,9 @@ class YellowTalk {
                             ];
                        }
                     }
-
-                    ftruncate($fileHandle, 0);
                     rewind($fileHandle);
                     fwrite($fileHandle, json_encode($talk, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+                    ftruncate($fileHandle, ftell($fileHandle));
                     fflush($fileHandle);
                 }
                 flock($fileHandle, LOCK_UN);

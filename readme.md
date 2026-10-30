@@ -96,26 +96,25 @@ Content file with a form for subscribing:
 
 The following settings can be configured in file `system/extensions/yellow-system.ini`:
 
-`TalkLocation` = location of forum files  
-`TalkTokenLocation` = location of forum tokens  
-`TalkPendingLocation` = location of tokens for pending subscriptions  
-`TalkFeedImageLocation` = location of images for feeds  
 `TalkFile` = filename of forum posts  
 `TalkGroupFile` = filename of forum groups  
 `TalkAuthorFile` = filename of forum authors  
 `TalkForbiddenFile` = filename of forbidden users  
+`TalkTokenDirectory` = directory of forum tokens  
+`TalkPendingDirectory` = directory of tokens for pending subscriptions  
+`TalkFeedImageLocation` = location of images for feeds  
 `TalkNewUsernamePrefix` = prefix of usernames  
 `TalkPasswordLength` = length of password  
 `TalkWhitelist` = email domains or IPs of visitors who can subscribe, comma-separated    
 `TalkBlacklist` = email domains or IPs of visitors who cannot subscribe, comma-separated  
 `TalkBlacklistPath` = path of a list of email domains which cannot be used for subscribing  
 `TalkListStyle` = style of the groups list, `flat`, `nested`, or `expandable` (the latter requires the [Filelist](https://github.com/giovannisalmeri/yellow-filelist/) extension)  
+`TalkLatestQuestionsNumber` = number of questions to show in main page  
 `TalkShowAvatar` = show avatars of users, via [Libravatar](https://libravatar.org/) or [Gravatar](https://gravatar.com/)  
+`TalkClientSideValidation` = validate form fields in browser, 1 or 0  
+`TalkTextMaxLength` = maximum length of text for a post  
 `TalkTokenLifetime` = lifetime of forms, in minutes  
 `TalkPendingLifetime` = maximum time between signing up and signing in for the first time  
-`TalkClientSideValidation` = validate form fields in browser, 1 or 0  
-`TalkLatestQuestionsNumber` = number of questions to show in main page  
-`TalkTextMaxLength` = maximum length of text for a post  
 `TalkFeedName` = filename for RSS feed  
 `TalkFeedDays` = days of posts to show in RSS feed  
 

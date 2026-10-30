@@ -16,7 +16,7 @@ The forum is available on your website as `https://website/talk/`. The access to
 
 ## How to define groups
 
-Before using the forum, you have to define some groups in the file `media/talk/groups.psv`, one for line, with the following format:
+Before using the forum, you have to define some groups in the file `system/extensions/talk-groups.psv`, one for line, with the following format:
 
     group_name|description|moderator
 
@@ -28,7 +28,7 @@ You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG,
 
 Users can subscribe via the signup form. Login details are sent by email. This system is designed for simplicity and speed, not for security.
 
-It is also possible to add users by manually updating the files `media/talk/authors.psv` and `system/extensions/restrict.ini`. File `media/talk/authors.psv` has the following format:
+It is also possible to add users by manually updating the files `system/extensions/talk-authors.psv` and `system/extensions/restrict.ini`. File `system/extensions/talk-authors.psv` has the following format:
 
     username|real_name|email
 
@@ -38,9 +38,9 @@ File `system/extensions/restrict.ini` has the following format:
 
 ## How to block users
 
-Users can be blocked by adding their usernames in file `media/talk/forbidden.psv`, one per line. They will be able to log in, but not to publish posts.
+Users can be blocked by adding their usernames in file `system/extensions/talk-forbidden.psv`, one per line. They will be able to log in, but not to publish posts.
 
-In this way you can also create public guest credentials: create a new user (e.g. with username `guest` and password `guest`) and add the username in file `media/talk/forbidden.psv`.
+In this way you can also create public guest credentials: create a new user (e.g. with username `guest` and password `guest`) and add the username in file `system/extensions/talk-forbidden.psv`.
 
 ## How to customise a forum
 
@@ -57,7 +57,7 @@ You can use shortcuts to show forms and other information:
 
 ## Examples
 
-File `media/talk/groups.psv`:
+File `system/extensions/talk-groups.psv`:
 
     arts.*|General discussions about arts|u12
     arts.cinema|All about films, actors and directors|u2

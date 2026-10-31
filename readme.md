@@ -18,9 +18,9 @@ The forum is available on your website as `https://website/talk/`. The access to
 
 Before using the forum, you have to define some groups in the file `system/extensions/talk-groups.psv`, one for line, with the following format:
 
-    group_name|description|moderator
+    group_name|description|moderator_username
 
-The name of the group can contain dots to create a hierarchy (e.g. `science.astronomy.moon`). The description is used in the page and in the feed of the group. The moderator (specified with the username) can edit the posts.
+The name of the group can contain dots to create a hierarchy (e.g. `science.astronomy.moon`). The description is used in the page and in the feed of the group. The moderator can edit the posts.
 
 You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG, or GIF) in folder `media/images/talk/`, no larger than 144×400, with the same name as the group (e.g. `science.astronomy.moon.jpg`).
 

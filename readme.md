@@ -20,7 +20,7 @@ Before using the forum, you have to define some groups in the file `system/exten
 
     group_name|description|moderator
 
-The name of the group can contain dots to create a hierarchy (e.g. `science.astronomy.moon`). The description will be used in the page and in the feed of the group. The moderator (specified with the username) will be able to edit the posts.
+The name of the group can contain dots to create a hierarchy (e.g. `science.astronomy.moon`). The description is used in the page and in the feed of the group. The moderator (specified with the username) can edit the posts.
 
 You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG, or GIF) in folder `media/images/talk/`, no larger than 144×400, with the same name as the group (e.g. `science.astronomy.moon.jpg`).
 
@@ -28,7 +28,7 @@ You can also add an icon for each RSS feed. Just place an image file (PNG, JPEG,
 
 Users can subscribe via the signup form. Login details are sent by email. This system is designed for simplicity and speed, not for security.
 
-It is also possible to add users by manually updating the files `system/extensions/talk-authors.psv` and `system/extensions/restrict.ini`. File `system/extensions/talk-authors.psv` has the following format:
+You can also add users by manually updating the files `system/extensions/talk-authors.psv` and `system/extensions/restrict.ini`. File `system/extensions/talk-authors.psv` has the following format:
 
     username|real_name|email
 
@@ -38,7 +38,7 @@ File `system/extensions/restrict.ini` has the following format:
 
 ## How to block users
 
-Users can be blocked by adding their usernames in file `system/extensions/talk-forbidden.psv`, one per line. They will be able to log in, but not to publish posts.
+You can block users by adding their usernames in file `system/extensions/talk-forbidden.psv`, one per line. They will be able to log in, but not to publish posts.
 
 In this way you can also create public guest credentials: create a new user (e.g. with username `guest` and password `guest`) and add the username in file `system/extensions/talk-forbidden.psv`.
 
@@ -80,7 +80,7 @@ Configuring a list of blacklisted email domains:
 
     TalkBlacklistPath: https://tempmailchecker.com/disposable-email-domains.txt
 
-Other lists you can use are `https://disposable.github.io/disposable-email-domains/domains.txt`,  `https://raw.githubusercontent.com/castle/disposable-email-domains/refs/heads/master/disposable-email-domains.txt`, `https://github.com/disposable-email-domains/disposable-email-domains/raw/refs/heads/main/disposable_email_blocklist.conf`.
+Other URLs you can use are e.g. `https://disposable.github.io/disposable-email-domains/domains.txt`,  `https://raw.githubusercontent.com/castle/disposable-email-domains/refs/heads/master/disposable-email-domains.txt`, `https://github.com/disposable-email-domains/disposable-email-domains/raw/refs/heads/main/disposable_email_blocklist.conf`.
 
 Content file with a form for subscribing:
 

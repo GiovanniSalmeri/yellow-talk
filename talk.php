@@ -577,15 +577,15 @@ class YellowTalk {
                 foreach ($authors as $key=>$author) {
                     fwrite($authorsFileHandle, "{$key}|{$author[0]}|{$author[1]}\n");
                 }
-                ftruncate($authorsFileHandle, ftell($authorsFileHandle));
                 fflush($authorsFileHandle);
+                ftruncate($authorsFileHandle, ftell($authorsFileHandle));
                 unset($restrictData[$username]);
                 rewind($restrictFileHandle);
                 foreach ($restrictData as $key=>$restrict) {
                     fwrite($restrictFileHandle, "{$key}:{$restrict[0]}".(isset($restrict[1]) ? "|$restrict[1]" : "")."\n");
                 }
-                ftruncate($restrictFileHandle, ftell($restrictFileHandle));
                 fflush($restrictFileHandle);
+                ftruncate($restrictFileHandle, ftell($restrictFileHandle));
                 $deleteSuccess = true;
             } else {
                 $deleteSuccess = false;
@@ -766,8 +766,8 @@ class YellowTalk {
                     }
                     rewind($fileHandle);
                     fwrite($fileHandle, json_encode($talk, JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-                    ftruncate($fileHandle, ftell($fileHandle));
                     fflush($fileHandle);
+                    ftruncate($fileHandle, ftell($fileHandle));
                 }
                 flock($fileHandle, LOCK_UN);
             }

@@ -574,16 +574,20 @@ class YellowTalk {
             if (isset($authors[$username]) && isset($restrictData[$username]) && ($restrictData[$username][0]===$password || $force)) {
                 $authors[$username] = [ "", "" ];
                 rewind($authorsFileHandle);
+                $fileData = "";
                 foreach ($authors as $key=>$author) {
-                    fwrite($authorsFileHandle, "{$key}|{$author[0]}|{$author[1]}\n");
+                    $fileData .= "{$key}|{$author[0]}|{$author[1]}\n";
                 }
+                fwrite($authorsFileHandle, $fileData);
                 fflush($authorsFileHandle);
                 ftruncate($authorsFileHandle, ftell($authorsFileHandle));
                 unset($restrictData[$username]);
                 rewind($restrictFileHandle);
+                $fileData = "";
                 foreach ($restrictData as $key=>$restrict) {
-                    fwrite($restrictFileHandle, "{$key}:{$restrict[0]}".(isset($restrict[1]) ? "|$restrict[1]" : "")."\n");
+                    $fileData .= "{$key}:{$restrict[0]}".(isset($restrict[1]) ? "|$restrict[1]" : "")."\n";
                 }
+                fwrite($restrictFileHandle, $fileData);
                 fflush($restrictFileHandle);
                 ftruncate($restrictFileHandle, ftell($restrictFileHandle));
                 $deleteSuccess = true;
